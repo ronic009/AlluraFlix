@@ -1,5 +1,6 @@
 // src/components/VideoCard.js
 import React from 'react';
+import '../styles/styles.css';
 
 const VideoCard = ({ title, category, image, videoUrl, description, onEdit, onDelete }) => {
   return (
