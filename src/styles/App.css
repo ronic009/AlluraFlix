@@ -30,12 +30,22 @@ body {
   header nav button:hover {
     background-color: #e64a19;
   }
+  .header-button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
   
   .banner {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('banner-image-url.jpg') no-repeat center center/cover;
+    /*background: url('banner-image-url.jpg') no-repeat center center/cover;*/
     height: 300px;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
@@ -75,6 +85,12 @@ body {
     display: flex;
     justify-content: space-between;
     padding: 10px;
+  }
+
+  .videos-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se ajusten a la siguiente línea si no hay espacio */
+    justify-content: space-between; /* Distribuye el espacio entre las tarjetas */
   }
   
   form {
@@ -125,6 +141,16 @@ body {
   
     .banner h2 {
       font-size: 1.5rem;
+    }
+    .header-button {
+      padding: 6px 12px;
+      margin: 2px;
+      font-size: 0.75rem;
+    }
+    .header-button {
+      padding: 6px 12px;
+      margin: 2px;
+      font-size: 0.75rem;
     }
   }
   

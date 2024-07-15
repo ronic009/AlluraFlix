@@ -31,17 +31,21 @@ const Home = () => {
   const handleSaveChanges = (e) => {
     e.preventDefault();
     const updatedVideo = {
+      ...currentVideo,
       title: e.target.title.value,
+      category: e.target.category.value,
+      image: e.target.thumbnail.value,
+      video: e.target.video.value,
       description: e.target.description.value,
-      thumbnail: e.target.thumbnail.value,
-      category: currentVideo.category
     };
 
     setVideos(prevVideos => {
       const updatedCategory = prevVideos[currentVideo.category].map(video =>
         video.title === currentVideo.title ? updatedVideo : video
       );
-      return { ...prevVideos, [currentVideo.category]: updatedCategory };
+      const newVideos = { ...prevVideos, [currentVideo.category]: updatedCategory };
+      localStorage.setItem('videos', JSON.stringify(newVideos));
+      return newVideos;
     });
     handleCloseModal();
   };
@@ -65,28 +69,7 @@ const Home = () => {
           </div>
         </section>
       ))}
-      <Modal show={showModal} handleClose={handleCloseModal}>
-        {currentVideo && (
-          <div>
-            <h2>Edit Video</h2>
-            <form onSubmit={handleSaveChanges}>
-              <label>
-                Title:
-                <input type="text" name="title" defaultValue={currentVideo.title} required />
-              </label>
-              <label>
-                Description:
-                <input type="text" name="description" defaultValue={currentVideo.description} required />
-              </label>
-              <label>
-                Thumbnail URL:
-                <input type="text" name="thumbnail" defaultValue={currentVideo.thumbnail} required />
-              </label>
-              <button type="submit">Save</button>
-            </form>
-          </div>
-        )}
-      </Modal>
+      <Modal show={showModal} handleClose={handleCloseModal} handleSave={handleSaveChanges} currentVideo={currentVideo} />
     </div>
   );
 };
