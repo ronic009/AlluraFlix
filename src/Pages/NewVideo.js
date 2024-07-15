@@ -1,7 +1,7 @@
 // src/pages/NewVideo.js
 import React, { useState } from 'react';
 import Header from '../Components/Header';
-import videosData from '../data/videosData';  // Añadir esta línea
+import videosData from '../data/videosData';
 import '../styles/NewVideo.css';
 
 const NewVideo = () => {
@@ -13,14 +13,15 @@ const NewVideo = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí manejas el guardado de datos del nuevo video
+    console.log("handleSubmit called");
+
     const newVideo = {
       id: Date.now(),
       title,
       category,
       image,
       video,
-      description
+      description,
     };
 
     const storedVideos = JSON.parse(localStorage.getItem('videos')) || videosData;
@@ -29,6 +30,8 @@ const NewVideo = () => {
     }
     storedVideos[category].push(newVideo);
     localStorage.setItem('videos', JSON.stringify(storedVideos));
+
+    console.log("Updated videos in localStorage:", storedVideos);
 
     // Limpiar formulario después de guardar
     setTitle('');
@@ -52,12 +55,25 @@ const NewVideo = () => {
       <h1>Nuevo Video</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>Título:</label>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+          <label htmlFor="title">Título:</label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
         </div>
         <div className="form-group">
-          <label>Categoría:</label>
-          <select value={category} onChange={(e) => setCategory(e.target.value)} required>
+          <label htmlFor="category">Categoría:</label>
+          <select
+            id="category"
+            name="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+          >
             <option value="">Selecciona una categoría</option>
             <option value="Front-End">Front-End</option>
             <option value="Back-End">Back-End</option>
@@ -65,16 +81,36 @@ const NewVideo = () => {
           </select>
         </div>
         <div className="form-group">
-          <label>Imagen:</label>
-          <input type="text" value={image} onChange={(e) => setImage(e.target.value)} required />
+          <label htmlFor="image">Imagen:</label>
+          <input
+            id="image"
+            name="image"
+            type="text"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            required
+          />
         </div>
         <div className="form-group">
-          <label>Video:</label>
-          <input type="text" value={video} onChange={(e) => setVideo(e.target.value)} required />
+          <label htmlFor="video">Video:</label>
+          <input
+            id="video"
+            name="video"
+            type="text"
+            value={video}
+            onChange={(e) => setVideo(e.target.value)}
+            required
+          />
         </div>
         <div className="form-group">
-          <label>Descripción:</label>
-          <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+          <label htmlFor="description">Descripción:</label>
+          <textarea
+            id="description"
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
         </div>
         <button type="submit">Guardar</button>
         <button type="button" onClick={handleClear}>Limpiar</button>
