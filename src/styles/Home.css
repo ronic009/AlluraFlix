@@ -1,19 +1,35 @@
 /* src/styles/Home.css */
+.home-container {
+  padding: 20px;
+}
+
+.video-section {
+  margin-bottom: 20px;
+}
+
 .video-list {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-}
-
-.video-category {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.videos {
-  display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   gap: 20px;
 }
+
+@media (max-width: 600px) {
+  .video-list {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+  .video-list {
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 1025px) {
+  .video-list {
+    justify-content: flex-start;
+  }
+}
+
