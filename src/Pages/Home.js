@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../Components/Header';
 import Banner from '../Components/Banner';
 import VideoCard from '../Components/VideoCard';
@@ -6,14 +6,21 @@ import Modal from '../Components/Modal';
 import videosData from '../data/videosData';
 
 const Home = () => {
-  const [videos, setVideos] = useState(videosData);
+  const [videos, setVideos] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [currentVideo, setCurrentVideo] = useState(null);
+
+  useEffect(() => {
+    const storedVideos = JSON.parse(localStorage.getItem('videos')) || videosData;
+    setVideos(storedVideos);
+  }, []);
 
   const handleDelete = (category, title) => {
     setVideos(prevVideos => {
       const updatedCategory = prevVideos[category].filter(video => video.title !== title);
-      return { ...prevVideos, [category]: updatedCategory };
+      const updatedVideos = { ...prevVideos, [category]: updatedCategory };
+      localStorage.setItem('videos', JSON.stringify(updatedVideos));
+      return updatedVideos;
     });
   };
 
@@ -31,21 +38,20 @@ const Home = () => {
   const handleSaveChanges = (e) => {
     e.preventDefault();
     const updatedVideo = {
-      ...currentVideo,
       title: e.target.title.value,
-      category: e.target.category.value,
-      image: e.target.thumbnail.value,
-      video: e.target.video.value,
       description: e.target.description.value,
+      image: e.target.image.value,
+      video: e.target.video.value,
+      category: currentVideo.category
     };
 
     setVideos(prevVideos => {
       const updatedCategory = prevVideos[currentVideo.category].map(video =>
         video.title === currentVideo.title ? updatedVideo : video
       );
-      const newVideos = { ...prevVideos, [currentVideo.category]: updatedCategory };
-      localStorage.setItem('videos', JSON.stringify(newVideos));
-      return newVideos;
+      const updatedVideos = { ...prevVideos, [currentVideo.category]: updatedCategory };
+      localStorage.setItem('videos', JSON.stringify(updatedVideos));
+      return updatedVideos;
     });
     handleCloseModal();
   };
@@ -69,7 +75,32 @@ const Home = () => {
           </div>
         </section>
       ))}
-      <Modal show={showModal} handleClose={handleCloseModal} handleSave={handleSaveChanges} currentVideo={currentVideo} />
+      <Modal show={showModal} handleClose={handleCloseModal}>
+        {currentVideo && (
+          <div>
+            <h2>Edit Video</h2>
+            <form onSubmit={handleSaveChanges}>
+              <label>
+                Title:
+                <input type="text" name="title" defaultValue={currentVideo.title} required />
+              </label>
+              <label>
+                Description:
+                <input type="text" name="description" defaultValue={currentVideo.description} required />
+              </label>
+              <label>
+                Image URL:
+                <input type="text" name="image" defaultValue={currentVideo.image} required />
+              </label>
+              <label>
+                Video URL:
+                <input type="text" name="video" defaultValue={currentVideo.video} required />
+              </label>
+              <button type="submit">Save</button>
+            </form>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };
