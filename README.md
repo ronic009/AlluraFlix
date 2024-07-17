@@ -21,3 +21,24 @@ AluraFlix es una aplicación para gestionar y visualizar videos categorizados. P
 ```bash
 git clone https://github.com/tu-usuario/AluraFlix.git
 
+Navega al directorio del proyecto:
+bash
+Copiar código
+cd AluraFlix
+Instala las dependencias:
+bash
+Copiar código
+npm install
+Uso
+Inicia la aplicación:
+bash
+Copiar código
+npm start
+Abre tu navegador y navega a http://localhost:3000
+
+Contribuciones
+¡Las contribuciones son bienvenidas! Si tienes alguna mejora o corrección, por favor abre un issue o envía un pull request.
+
+Licencia
+Este proyecto está bajo la Licencia MIT.
+
